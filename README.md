@@ -1,6 +1,6 @@
-# terraform-aws-__MODULE__
+# terraform-aws-s3-bucket
 
-This module: __DESCRIPTION__.
+This module: Terraform module for one private, general purpose Amazon S3 bucket with secure defaults.
 
 <!-- One paragraph: what the module creates, with which secure defaults, and
      for whom. A reader with no knowledge of your project must be able to
@@ -18,8 +18,8 @@ This module deliberately does not manage:
 ## Usage
 
 ```hcl
-module "__MODULE__" {
-  source = "git::https://github.com/EG2development/terraform-aws-__MODULE__.git?ref=v0.0.0" # x-release-please-version
+module "s3-bucket" {
+  source = "git::https://github.com/EG2development/terraform-aws-s3-bucket.git?ref=v0.0.0" # x-release-please-version
 
   name = "example"
 
