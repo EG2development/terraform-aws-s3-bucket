@@ -1,0 +1,79 @@
+<mxfile host="Electron" agent="generate_shared_terraform_modules.py" version="24.7.17">
+  <diagram id="page-architecture" name="architecture">
+    <mxGraphModel dx="1400" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c2" value="terraform-aws-s3-bucket — architecture" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=20;fontStyle=1;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1300" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="A private bucket: every public-access block on, encryption always, and by default TLS-only access, versioning and a lifecycle rule." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#545B64;spacing=4;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="50" width="1354" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="&lt;b&gt;Inputs&lt;/b&gt;&lt;br&gt;&lt;b&gt;name&lt;/b&gt; — required&lt;br&gt;force_destroy = false&lt;br&gt;kms_key_arn = null&lt;br&gt;versioning_enabled = true&lt;br&gt;lifecycle_rules = one rule: abort incomplete uploads after 7 days&lt;br&gt;enforce_tls = true&lt;br&gt;attach_policy_json = false&lt;br&gt;policy_json = null&lt;br&gt;access_logging = null&lt;br&gt;tags = {}" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#EAF3FB;strokeColor=#147EBA;dashed=0;fontSize=10;fontColor=#232F3E;align=left;verticalAlign=top;spacing=6;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="280" height="186" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" value="&lt;b&gt;Outputs&lt;/b&gt;&lt;br&gt;bucket_id&lt;br&gt;bucket_arn&lt;br&gt;bucket_domain_name&lt;br&gt;bucket_regional_domain_name&lt;br&gt;bucket_region" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#EEF6E8;strokeColor=#7AA116;dashed=0;fontSize=10;fontColor=#232F3E;align=left;verticalAlign=top;spacing=6;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="100" width="294" height="101" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" value="&lt;b&gt;IAM the module creates&lt;/b&gt;&lt;br&gt;None. The bucket policy only denies requests without TLS (enforce_tls) and adds the caller's policy_json; access is granted by the caller's IAM policies." style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FDF2F4;strokeColor=#DD344C;dashed=0;fontSize=10;fontColor=#232F3E;align=left;verticalAlign=top;spacing=6;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="217" width="294" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" value="&lt;b&gt;Requirements&lt;/b&gt;&lt;br&gt;Terraform ≥ 1.9.0 · hashicorp/aws ≥ 6.0&lt;br&gt;No provider block: the caller's provider sets the account, the Region and default_tags." style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#545B64;dashed=0;fontSize=10;fontColor=#232F3E;align=left;verticalAlign=top;spacing=6;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="323" width="294" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="c8" value="Only when … — created only when the condition holds" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#879196;dashed=1;verticalAlign=top;align=left;spacingLeft=8;spacingTop=2;fontStyle=2;fontSize=10;fontColor=#232F3E;container=1;collapsible=0;pointerEvents=0;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="415" width="294" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="c9" value="Grey — not created by the module: the caller's, or AWS's" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F1F3F3;strokeColor=#5A6C86;dashed=0;fontSize=10;fontColor=#232F3E;align=left;verticalAlign=top;spacing=6;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="459" width="294" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="c10" value="Region (the caller's provider)" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_region;strokeColor=#00A4A6;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="100" width="950" height="650" as="geometry" />
+        </mxCell>
+        <mxCell id="c11" value="&lt;b&gt;Callers' principals&lt;/b&gt;&lt;br&gt;access through IAM policies the caller writes" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F1F3F3;strokeColor=#5A6C86;fontSize=11;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="370" y="160" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c12" value="&lt;b&gt;aws_s3_bucket.main&lt;/b&gt; · {name}&lt;br&gt;force_destroy = false&lt;br&gt;tags = var.tags (no Name tag)" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;spacingLeft=2;" vertex="1" parent="1">
+          <mxGeometry x="800" y="158" width="64" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="c13" value="TLS only (enforce_tls)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#545B64;strokeWidth=1.2;fontSize=10;fontColor=#232F3E;labelBackgroundColor=#FFFFFF;jettySize=auto;orthogonalLoop=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="c11" target="c12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c14" value="Configuration attached to the bucket" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#7AA116;dashed=0;verticalAlign=top;align=left;spacingLeft=8;spacingTop=2;fontStyle=1;fontSize=11;fontColor=#232F3E;container=1;collapsible=0;pointerEvents=0;" vertex="1" parent="1">
+          <mxGeometry x="370" y="270" width="890" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="c15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#545B64;strokeWidth=1.2;fontSize=10;fontColor=#232F3E;labelBackgroundColor=#FFFFFF;jettySize=auto;orthogonalLoop=1;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="c12" target="c14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c16" value="&lt;b&gt;aws_s3_bucket_public_access_block.main&lt;/b&gt;&lt;br&gt;&lt;i&gt;Always&lt;/i&gt;&lt;br&gt;block_public_acls, block_public_policy, ignore_public_acls and restrict_public_buckets: all true" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#879196;dashed=0;fontSize=10;fontColor=#232F3E;align=left;verticalAlign=top;spacing=6;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="385" y="304" width="280" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c17" value="&lt;b&gt;aws_s3_bucket_server_side_​encryption_configuration.main&lt;/b&gt;&lt;br&gt;&lt;i&gt;Always&lt;/i&gt;&lt;br&gt;SSE-S3 (AES256) by default; SSE-KMS with a bucket key when kms_key_arn is set" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#879196;dashed=0;fontSize=10;fontColor=#232F3E;align=left;verticalAlign=top;spacing=6;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="304" width="280" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c18" value="&lt;b&gt;aws_s3_bucket_policy.main&lt;/b&gt;&lt;br&gt;&lt;i&gt;Only when enforce_tls (default true) or attach_policy_json&lt;/i&gt;&lt;br&gt;DenyInsecureTransport: deny s3:* on the bucket and its objects when aws:SecureTransport is false; policy_json is merged in when attach_policy_json" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#879196;dashed=1;fontSize=10;fontColor=#232F3E;align=left;verticalAlign=top;spacing=6;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="975" y="304" width="280" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c19" value="&lt;b&gt;aws_s3_bucket_versioning.main&lt;/b&gt;&lt;br&gt;&lt;i&gt;Only when versioning_enabled (default true)&lt;/i&gt;&lt;br&gt;Versioning: Enabled" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#879196;dashed=1;fontSize=10;fontColor=#232F3E;align=left;verticalAlign=top;spacing=6;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="385" y="446" width="280" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c20" value="&lt;b&gt;aws_s3_bucket_lifecycle_​configuration.main&lt;/b&gt;&lt;br&gt;&lt;i&gt;Only when lifecycle_rules is not empty&lt;/i&gt;&lt;br&gt;Per rule: expiration_days, noncurrent_version_expiration_days, abort_incomplete_multipart_upload_days (7). Default: one rule that only aborts incomplete uploads" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#879196;dashed=1;fontSize=10;fontColor=#232F3E;align=left;verticalAlign=top;spacing=6;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="446" width="280" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c21" value="&lt;b&gt;aws_s3_bucket_logging.main&lt;/b&gt;&lt;br&gt;&lt;i&gt;Only when access_logging is set&lt;/i&gt;&lt;br&gt;Each request is logged to access_logging.target_bucket under target_prefix" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#879196;dashed=1;fontSize=10;fontColor=#232F3E;align=left;verticalAlign=top;spacing=6;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="975" y="446" width="280" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c22" value="Caller's log bucket&lt;br&gt;same account and Region, SSE-S3" style="rounded=1;absoluteArcSize=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F1F3F3;strokeColor=#5A6C86;fontSize=11;fontColor=#232F3E;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1005" y="640" width="230" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="c23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;strokeColor=#545B64;strokeWidth=1.2;fontSize=10;fontColor=#232F3E;labelBackgroundColor=#FFFFFF;jettySize=auto;orthogonalLoop=1;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="c21" target="c22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c24" value="Source: main.tf, policy.tf, variables.tf and outputs.tf in this repository, as of the version this diagram was drawn for. Edit architecture.drawio in draw.io and export architecture.png beside it (File › Export as › PNG)." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#545B64;spacing=4;fontSize=10;fontColor=#879196;" vertex="1" parent="1">
+          <mxGeometry x="40" y="762" width="1574" height="22" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
