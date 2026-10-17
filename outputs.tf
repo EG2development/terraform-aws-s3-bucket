@@ -1,17 +1,24 @@
-# Every output has a description. Output what callers need to wire other
-# resources to this module's: names, ARNs, IDs, URLs.
-
-output "name" {
-  description = "Name of the managed resource."
-  value       = var.name
+output "bucket_id" {
+  description = "Name of the bucket (S3 uses the name as the ID). Known at plan time."
+  value       = aws_s3_bucket.main.bucket
 }
 
-output "tags" {
-  description = "Tags applied to every resource, including the generated Name tag."
-  value       = local.tags
+output "bucket_arn" {
+  description = "ARN of the bucket, for IAM and bucket policies. An object's ARN is this ARN, a slash and the object key."
+  value       = aws_s3_bucket.main.arn
 }
 
-output "account_id" {
-  description = "AWS account the module was planned in. Placeholder: remove with the data source in main.tf."
-  value       = data.aws_caller_identity.current.account_id
+output "bucket_domain_name" {
+  description = "Global domain name of the bucket: the bucket name followed by .s3.amazonaws.com."
+  value       = aws_s3_bucket.main.bucket_domain_name
+}
+
+output "bucket_regional_domain_name" {
+  description = "Regional domain name of the bucket, for example for a CloudFront origin."
+  value       = aws_s3_bucket.main.bucket_regional_domain_name
+}
+
+output "bucket_region" {
+  description = "AWS Region the bucket is in."
+  value       = aws_s3_bucket.main.bucket_region
 }
