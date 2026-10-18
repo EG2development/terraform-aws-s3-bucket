@@ -6,7 +6,7 @@ minutes and costs a fraction of a penny: a few requests and a few bytes of stora
 
 ## Before you start
 
-- Terraform 1.9 or later, the AWS CLI version 2, `curl`, and credentials for a
+- Terraform 1.16 or later, the AWS CLI version 2, `curl`, and credentials for a
   sandbox AWS account that may create S3 buckets and bucket policies.
 - Read access to this repository (`git ls-remote https://github.com/EG2development/terraform-aws-s3-bucket.git`
   lists its tags).
@@ -17,7 +17,7 @@ Create an empty directory and a file `main.tf` in it:
 
 ```hcl
 terraform {
-  required_version = ">= 1.9.0"
+  required_version = ">= 1.16.0"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
