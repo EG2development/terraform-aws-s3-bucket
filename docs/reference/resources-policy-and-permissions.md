@@ -90,7 +90,7 @@ To apply and destroy the module, the caller's credentials need:
 
 | | Minimum | Why |
 | --- | --- | --- |
-| Terraform | 1.9.0 | Variable validations that refer to other variables |
+| Terraform | 1.16.0 | The floor shared by this family of modules |
 | `hashicorp/aws` | 6.0 | The `bucket_region` attribute, read by the `bucket_region` output |
 
 Provider versions 6.22 to 6.39 can plan an in-place change to the encryption
