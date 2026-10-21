@@ -57,20 +57,20 @@ it), never to a branch. Run `terraform init` after changing `source`.
 ## Requirements
 
 | Name | Version |
-| ---- | ------- |
+|------|---------|
 | terraform | >= 1.9.0 |
 | aws | >= 6.0 |
 
 ## Providers
 
 | Name | Version |
-| ---- | ------- |
+|------|---------|
 | aws | >= 6.0 |
 
 ## Resources
 
 | Name | Type |
-| ---- | ---- |
+|------|------|
 | [aws_s3_bucket.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket_lifecycle_configuration.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_lifecycle_configuration) | resource |
 | [aws_s3_bucket_logging.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_logging) | resource |
@@ -82,7 +82,7 @@ it), never to a branch. Run `terraform init` after changing `source`.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-| ---- | ----------- | ---- | ------- | :------: |
+|------|-------------|------|---------|:--------:|
 | name | Name of the bucket. Bucket names are shared by every AWS account in the partition, so include something unique, such as the account ID. The module adds no Name tag: the bucket name is the bucket's identity. Changing it replaces the bucket. | `string` | n/a | yes |
 | access\_logging | Server access logging: S3 writes a record of each request to target\_bucket, under target\_prefix (default "", the bucket root). The target bucket must be another bucket in the same account and Region, use SSE-S3, and allow the logging.s3.amazonaws.com service principal to write in its bucket policy. Null (default) turns access logging off. | <pre>object({<br/>    target_bucket = string<br/>    target_prefix = optional(string, "")<br/>  })</pre> | `null` | no |
 | attach\_policy\_json | Merge policy\_json into the bucket policy. A separate flag, rather than a null check on the JSON, so the decision is known at plan time even when the policy names resources created in the same apply. | `bool` | `false` | no |
@@ -97,7 +97,7 @@ it), never to a branch. Run `terraform init` after changing `source`.
 ## Outputs
 
 | Name | Description |
-| ---- | ----------- |
+|------|-------------|
 | bucket\_arn | ARN of the bucket, for IAM and bucket policies. An object's ARN is this ARN, a slash and the object key. |
 | bucket\_domain\_name | Global domain name of the bucket: the bucket name followed by .s3.amazonaws.com. |
 | bucket\_id | Name of the bucket (S3 uses the name as the ID). Known at plan time. |
@@ -121,8 +121,9 @@ it), never to a branch. Run `terraform init` after changing `source`.
 
 ## Security scanning
 
-Checkov runs on every pull request. Two checks are skipped, in
-[`.github/workflows/ci.yml`](.github/workflows/ci.yml):
+Checkov runs on every pull request via
+[Static Analysis](.github/workflows/workflow.yml). Two AWS checks are skipped in
+[`configs/checkov.yml`](configs/checkov.yml):
 
 | Check | Why it is skipped |
 | --- | --- |
@@ -143,7 +144,8 @@ Semantic versions, tags `vMAJOR.MINOR.PATCH`, created by release-please from
 Conventional Commit pull-request titles. Patch: a fix that changes no plan. Minor: a
 new optional input, output or off-by-default resource. Major: anything that can
 change or replace an existing caller's resources, or raise a minimum version.
-Details: [the standard](https://github.com/EG2development/terraform-module-standards/blob/main/docs/standard.md).
+For the contribution and release checks, see [`CONTRIBUTING.md`](CONTRIBUTING.md)
+and [the release workflow](.github/workflows/release-please.yml).
 
 ## Contributing and ownership
 
